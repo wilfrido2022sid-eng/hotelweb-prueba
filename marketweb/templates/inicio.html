@@ -1,0 +1,251 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<div class="container my-4">
+
+<!-- Banner Principal y Perfil del Recepcionista -->
+<div class="p-4 mb-4 rounded-3 text-white shadow-sm hero-banner">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
+        
+        <div class="d-flex align-items-center gap-3">
+            <div class="bg-white p-1 rounded-5 shadow-sm d-flex align-items-center justify-content-center" style="min-width: 140px; height: 140px;">
+                <img src="{% static 'img/logo.png' %}" alt="Logo Walena" style="max-height: 100%; width: auto; object-fit: contain;">
+            </div>
+
+            <div>
+                <div class="d-inline-block px-3 py-1 rounded-pill mb-2 fw-semibold text-uppercase pill-location">
+                    <i class="bi bi-geo-alt-fill me-1"></i> Hotel Walena — Riohacha, La Guajira
+                </div>
+                <h2 class="fw-bold mb-1 text-white">Recepción - Walena Hotel</h2>
+                <p>
+                    Atendemos con pasión — Gestión integral de habitaciones, reservas y facturación DIAN.
+                </p>
+            </div>
+        </div>
+
+        <!-- MÓDULO DE PERFIL Y BOTÓN CERRAR SESIÓN -->
+        <div class="d-flex flex-column align-items-md-end gap-2 text-start text-md-end">
+            <div class="bg-white bg-opacity-10 border border-white border-opacity-25 rounded-3 p-2 px-3">
+                <div>
+                    <i class="bi bi-person-circle me-1"></i> {{ usuario_nombre }}
+                </div>
+                <span class="badge bg-warning text-dark extra-small text-uppercase fw-bold"> {{ usuario_rol }}
+                </span>
+            </div>
+            
+            <div class="d-flex gap-2 w-100 justify-content-md-end">
+                <!-- Acción que activa la función cerrar_sesion() en views.py -->
+                <a href="{% url 'logout' %}" class="btn btn-outline-light btn-sm fw-bold shadow-sm d-flex align-items-center gap-1">
+                    <i class="bi bi-box-arrow-right"></i> Salir
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <!-- Indicadores Métricos -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100 rounded-3 text-white card-total-suites">
+                <div class="card-body p-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-uppercase fw-bold text-white-50 small">Total Suites</span>
+                        <h2 class="fw-bold mb-0 mt-1 fs-2">{{ total_habitaciones }}</h2>
+                    </div>
+                    <div class="rounded-3 p-3 d-flex align-items-center justify-content-center icon-box-dark">
+                        <i class="bi bi-door-closed fs-3 text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100 rounded-3 bg-white card-disponibles">
+                <div class="card-body p-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-uppercase fw-bold text-success small">Disponibles</span>
+                        <h2 class="fw-bold mb-0 mt-1 text-dark fs-2">{{ disponibles }}</h2>
+                    </div>
+                    <div class="rounded-3 p-3 d-flex align-items-center justify-content-center icon-box-success">
+                        <i class="bi bi-check-circle-fill fs-3 text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100 rounded-3 bg-white card-ocupadas">
+                <div class="card-body p-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-uppercase fw-bold text-primary small">Ocupadas</span>
+                        <h2 class="fw-bold mb-0 mt-1 text-dark fs-2">{{ ocupadas }}</h2>
+                    </div>
+                    <div class="rounded-3 p-3 d-flex align-items-center justify-content-center icon-box-info">
+                        <i class="bi bi-person-badge-fill fs-3 text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100 rounded-3 bg-white card-aseo">
+                <div class="card-body p-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-uppercase fw-bold text-warning small">En Aseo</span>
+                        <h2 class="fw-bold mb-0 mt-1 text-dark fs-2">{{ en_aseo }}</h2>
+                    </div>
+                    <div class="rounded-3 p-3 d-flex align-items-center justify-content-center icon-box-warning">
+                        <i class="bi bi-brush-fill fs-3 text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Operaciones Rápidas -->
+    <div class="card border-0 shadow-sm rounded-3 p-3 mb-4 bg-white">
+        <div class="d-flex align-items-center mb-2">
+            <h6 class="fw-bold text-uppercase text-muted mb-0 small">
+                <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Operaciones Rápidas
+            </h6>
+        </div>
+        <div class="row g-2">
+            <div class="col-6 col-md-3">
+                <a href="{% url 'disponibilidad' %}" class="btn btn-light border text-start w-100 p-2 d-flex align-items-center gap-2 rounded-2 shadow-sm fw-semibold text-dark h-100 quick-op-btn">
+                    <div class="rounded p-2 text-white icon-op-reserva">
+                        <i class="bi bi-journal-plus"></i>
+                    </div>
+                    <span>Nueva Reserva</span>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="{% url 'listar_reservas' %}?estado=CONFIRMADA" class="btn btn-light border text-start w-100 p-2 d-flex align-items-center gap-2 rounded-2 shadow-sm fw-semibold text-dark h-100 quick-op-btn">
+                    <div class="rounded p-2 text-white icon-op-checkin">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                    </div>
+                    <span>Check-in</span>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="{% url 'listar_reservas' %}?estado=CHECKIN" class="btn btn-light border text-start w-100 p-2 d-flex align-items-center gap-2 rounded-2 shadow-sm fw-semibold text-dark h-100 quick-op-btn">
+                    <div class="rounded p-2 text-white icon-op-checkout">
+                        <i class="bi bi-box-arrow-left"></i>
+                    </div>
+                    <span>Check-out</span>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="{% url 'listar_huespedes' %}" class="btn btn-light border text-start w-100 p-2 d-flex align-items-center gap-2 rounded-2 shadow-sm fw-semibold text-dark h-100 quick-op-btn">
+                    <div class="rounded p-2 text-white icon-op-huespedes">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <span>Huéspedes</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estado de Habitaciones -->
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h4 class="fw-bold text-dark mb-0 section-title">
+            Estado de Habitaciones
+        </h4>
+        <span class="badge bg-white text-muted border px-3 py-2 fw-normal rounded-pill shadow-sm">
+            <i class="bi bi-arrow-repeat text-primary me-1"></i> Vista Operativa
+        </span>
+    </div>
+
+    <div class="row g-3 mb-4">
+        {% for hab in habitaciones %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card shadow-sm border-0 rounded-3 h-100 p-2 position-relative card-hab {% if hab.estado == 'DISPONIBLE' %}hab-disponible{% elif hab.estado == 'OCUPADA' %}hab-ocupada{% else %}hab-aseo{% endif %}">
+                    <div class="card-body p-3 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <span class="text-uppercase text-muted fw-bold extra-small">Suite</span>
+                                    <h3 class="fw-bold mb-0 text-dark fs-4">Hab. {{ hab.numero }}</h3>
+                                </div>
+                                <span class="badge px-2 py-1 fw-bold text-uppercase extra-small {% if hab.estado == 'DISPONIBLE' %}badge-estado-disponible{% elif hab.estado == 'OCUPADA' %}badge-estado-ocupada{% else %}badge-estado-aseo{% endif %}">
+                                    {{ hab.get_estado_display|default:hab.estado }}
+                                </span>
+                            </div>
+
+                            <div class="p-2 rounded-2 mb-3 hab-details-box">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="text-muted"><i class="bi bi-layers me-1"></i>Piso:</span>
+                                    <span class="fw-semibold text-dark">{{ hab.piso }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="text-muted"><i class="bi bi-door-open me-1"></i>Tipo:</span>
+                                    <span class="fw-semibold text-dark">{{ hab.tipo.nombre }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-muted"><i class="bi bi-tag me-1"></i>Tarifa:</span>
+                                    <span class="fw-bold text-success">${{ hab.tipo.precio_persona_noche }} COP</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            {% if hab.estado == 'DISPONIBLE' %}
+                                <a href="{% url 'disponibilidad' %}" class="btn btn-sm w-100 fw-bold shadow-sm btn-hab-disponible">
+                                    <i class="bi bi-plus-circle me-1"></i> Reservar
+                                </a>
+                            {% elif hab.estado == 'OCUPADA' %}
+                                {% if hab.reserva_activa %}
+                                    {% if hab.reserva_activa.estado == 'CHECKIN' %}
+                                        <!-- El huésped ya está en casa, puede consumir y hacer check-out -->
+                                        <div class="d-flex gap-1">
+                                            <a href="{% url 'agregar_servicio_reserva' hab.reserva_activa.id %}" class="btn btn-sm w-50 fw-bold shadow-sm btn-outline-primary" title="Cargar Consumo">
+                                                <i class="bi bi-cart-plus"></i> Consumo
+                                            </a>
+                                            <a href="{% url 'checkout' hab.reserva_activa.id %}" class="btn btn-sm w-50 fw-bold shadow-sm btn-warning text-dark" title="Check-out">
+                                                <i class="bi bi-box-arrow-left"></i> Salida
+                                            </a>
+                                        </div>
+                                    {% elif hab.reserva_activa.estado == 'CONFIRMADA' %}
+                                        <!-- La habitación está bloqueada, pero el huésped aún debe hacer Check-in -->
+                                        <a href="{% url 'checkin' hab.reserva_activa.id %}" class="btn btn-sm w-100 fw-bold shadow-sm btn-primary">
+                                            <i class="bi bi-box-arrow-in-right me-1"></i> Procesar Check-in
+                                        </a>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="btn btn-sm w-100 btn-secondary disabled">Error: Ocupada sin Reserva</span>
+                                {% endif %}
+                            {% else %}
+                                <a href="{% url 'liberar_habitacion' hab.id %}" class="btn btn-sm w-100 fw-bold shadow-sm btn-hab-aseo">
+                                    <i class="bi bi-check2-square me-1"></i> Finalizar Aseo / Habilitar
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="card border-0 shadow-sm rounded-3 p-5 text-center bg-white">
+                    <div class="mb-3">
+                        <div class="d-inline-flex p-3 rounded-circle icon-box-warning text-warning">
+                            <i class="bi bi-building-exclamation fs-1"></i>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-1">No hay habitaciones registradas en la base de datos</h5>
+                    <p class="text-muted small mb-3">
+                        Para visualizar el mapa de suites, primero registra las habitaciones desde el panel de administración.
+                    </p>
+                    <div>
+                        <a href="/admin/" target="_blank" class="btn btn-sm text-white fw-semibold px-4 py-2 bg-dark rounded-2">
+                            <i class="bi bi-plus-circle me-1"></i> Ir al Panel Admin
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% include 'inc/footer.html' %}

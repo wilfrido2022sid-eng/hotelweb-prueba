@@ -1,0 +1,166 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<div class="container my-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h3 class="fw-bold text-dark mb-1">
+                <i class="bi bi-journal-plus text-primary me-2"></i>Registrar Nueva Reserva
+            </h3>
+            <p class="text-muted small mb-0">Completa los datos del huésped para asignar la Suite {{ habitacion.numero }}.</p>
+        </div>
+        <a href="{% url 'disponibilidad' %}" class="btn btn-outline-secondary btn-sm rounded-2">
+            <i class="bi bi-arrow-left me-1"></i> Volver a Disponibilidad
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Resumen de la Habitación y Estancia -->
+        <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm rounded-3 p-3 bg-white">
+                <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">
+                    <i class="bi bi-house-door text-primary me-2"></i>Detalle de la Suite
+                </h5>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Número:</span>
+                    <span class="fw-bold text-dark">Habitación {{ habitacion.numero }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Piso:</span>
+                    <span class="fw-semibold text-dark">Piso {{ habitacion.piso }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Tipo:</span>
+                    <span class="fw-semibold text-dark">{{ habitacion.tipo.nombre }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Tarifa p/p noche:</span>
+                    <span class="fw-bold text-success">${{ habitacion.tipo.precio_persona_noche }} COP</span>
+                </div>
+
+                <hr class="my-3">
+
+                <h6 class="fw-bold text-dark mb-2">
+                    <i class="bi bi-calculator text-primary me-2"></i>Resumen de Estancia
+                </h6>
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="text-muted small">Check-in:</span>
+                    <span class="fw-bold small text-primary">{{ f_entrada }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="text-muted small">Check-out:</span>
+                    <span class="fw-bold small text-danger">{{ f_salida }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="text-muted small">Duración:</span>
+                    <span class="fw-bold small text-dark"><span id="lblNoches">{{ cant_noches }}</span> noche(s)</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted small">Huéspedes:</span>
+                    <span class="fw-bold small text-dark"><span id="lblHuespedes">{{ num_huespedes }}</span> persona(s)</span>
+                </div>
+
+                <div class="p-3 bg-light rounded-3 mt-3 border">
+                    <div class="text-muted extra-small mb-1">Fórmula de cálculo:</div>
+                    <div class="small text-muted mb-2">
+                        {{ cant_noches }} noche(s) × <span id="lblFormulaHuespedes">{{ num_huespedes }}</span> p. × ${{ habitacion.tipo.precio_persona_noche }}
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-dark fs-6">Total Alojamiento:</span>
+                        <span class="fw-bold text-success fs-5" id="lblTotalEstancia">${{ total_estancia }} COP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario del Huésped -->
+        <div class="col-12 col-md-8">
+            <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
+                <form method="POST" action="{% url 'crear_reserva' habitacion.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="fecha_entrada" value="{{ f_entrada }}">
+                    <input type="hidden" name="fecha_salida" value="{{ f_salida }}">
+
+                    <h5 class="fw-bold text-dark mb-3"><i class="bi bi-person-vcard text-primary me-2"></i>Datos del Huésped Principal</h5>
+                    
+                    <div class="row g-3 mb-3">
+                        <div class="col-12 col-md-4">
+                            <label class="form-label small fw-semibold">Tipo Documento</label>
+                            <select name="tipo_documento" class="form-select" required>
+                                <option value="CC">Cédula de Ciudadanía</option>
+                                <option value="CE">Cédula de Extranjería</option>
+                                <option value="PASAPORTE">Pasaporte</option>
+                                <option value="TI">Tarjeta de Identidad</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <label class="form-label small fw-semibold">Número de Documento</label>
+                            <input type="text" name="numero_documento" class="form-control" required placeholder="Ej: 1082300123">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">Nombres</label>
+                            <input type="text" name="nombres" class="form-control" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">Apellidos</label>
+                            <input type="text" name="apellidos" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">Teléfono / WhatsApp</label>
+                            <input type="text" name="telefono" class="form-control" required placeholder="+57 300 000 0000">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">Correo Electrónico</label>
+                            <input type="email" name="correo" class="form-control" required placeholder="cliente@correo.com">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">Nacionalidad</label>
+                            <input type="text" name="nacionalidad" class="form-control" value="Colombiana" required>
+                        </div>
+                        <div class="col-12 col-md-6 d-flex align-items-center mt-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="es_extranjero" name="es_extranjero">
+                                <label class="form-check-label small fw-semibold" for="es_extranjero">¿Es Huésped Extranjero? (Exento de IVA DIAN)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h5 class="fw-bold text-dark mb-3"><i class="bi bi-sliders text-primary me-2"></i>Parámetros de la Reserva</h5>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">Número de Acompañantes / Huéspedes</label>
+                            <input type="number" id="inputNumHuespedes" name="num_huespedes" class="form-control" value="{{ num_huespedes }}" min="1" max="{{ habitacion.tipo.capacidad }}" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">Canal de Origen</label>
+                            <select name="canal_reserva" class="form-select">
+                                <option value="PRESENCIAL">Presencial / Recepción</option>
+                                <option value="DIRECTA">Directa / WhatsApp</option>
+                                <option value="WEB">Sitio Web Walena</option>
+                                <option value="BOOKING">Booking.com</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 fw-bold py-2 shadow-sm">
+                        <i class="bi bi-check-circle me-1"></i> Confirmar y Guardar Reserva
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'inc/footer.html' %}

@@ -1,0 +1,56 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<div class="container my-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h3 class="fw-bold text-dark mb-0">Historial de {{ huesped.nombres }} {{ huesped.apellidos }}</h3>
+            <p class="text-muted small mb-0">Documento: {{ huesped.tipo_documento }} {{ huesped.numero_documento }}</p>
+        </div>
+        <a href="{% url 'listar_huespedes' %}" class="btn btn-outline-secondary btn-sm fw-bold">
+            <i class="bi bi-arrow-left me-1"></i> Volver
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+        <div class="card-header bg-light fw-bold py-3">
+            <i class="bi bi-journal-bookmark me-1"></i> Reservas e Historial de Estancias
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th># Reserva</th>
+                        <th>Habitación</th>
+                        <th>Entrada</th>
+                        <th>Salida</th>
+                        <th>Estado</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in reservas %}
+                        <tr>
+                            <td><strong>#{{ r.id }}</strong></td>
+                            <td>Suite {{ r.habitacion.numero }}</td>
+                            <td>{{ r.fecha_entrada }}</td>
+                            <td>{{ r.fecha_salida }}</td>
+                            <td>
+                                <span class="badge {% if r.estado == 'CHECKIN' %}bg-primary{% elif r.estado == 'CHECKOUT' %}bg-success{% elif r.estado == 'CONFIRMADA' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+                                    {{ r.get_estado_display }}
+                                </span>
+                            </td>
+                            <td class="fw-bold">${{ r.valor_total }} COP</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">Este huésped no registra reservas previas.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% include 'inc/footer.html' %}

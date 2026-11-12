@@ -1,0 +1,74 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<div class="container my-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h3 class="fw-bold text-dark mb-1">
+                <i class="bi bi-person-gear text-primary me-2"></i>
+                {% if usuario_item %}Editar Usuario: {{ usuario_item.nombres }}{% else %}Registrar Nuevo Usuario{% endif %}
+            </h3>
+            <p class="text-muted small mb-0">Asigna los datos personales, rol y estado de la cuenta.</p>
+        </div>
+        <a href="{% url 'listar_usuarios' %}" class="btn btn-outline-secondary btn-sm rounded-2">
+            <i class="bi bi-arrow-left me-1"></i> Volver al Listado
+        </a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
+                <form method="POST" action="{% if usuario_item %}{% url 'editar_usuario' usuario_item.id %}{% else %}{% url 'crear_usuario' %}{% endif %}">
+                    {% csrf_token %}
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">Nombres</label>
+                            <input type="text" name="nombres" class="form-control" required value="{{ usuario_item.nombres|default:datos.nombres }}">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">Apellidos</label>
+                            <input type="text" name="apellidos" class="form-control" required value="{{ usuario_item.apellidos|default:datos.apellidos }}">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">Correo Electrónico</label>
+                            <input type="email" name="correo" class="form-control" required value="{{ usuario_item.correo|default:datos.correo }}">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">
+                                Contraseña {% if usuario_item %}<span class="text-muted fw-normal">(Dejar en blanco para no cambiar)</span>{% endif %}
+                            </label>
+                            <input type="password" name="contrasena" class="form-control" {% if not usuario_item %}required{% endif %} placeholder="••••••••">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-semibold">Rol del Usuario</label>
+                            <select name="rol" class="form-select" required>
+                                <option value="RECEPCIONISTA" {% if usuario_item.rol == 'RECEPCIONISTA' or datos.rol == 'RECEPCIONISTA' %}selected{% endif %}>Recepcionista</option>
+                                <option value="ADMIN_GERENTE" {% if usuario_item.rol == 'ADMIN_GERENTE' or datos.rol == 'ADMIN_GERENTE' %}selected{% endif %}>Administrador / Gerente</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-6 d-flex align-items-center mt-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="activo" name="activo" 
+                                        {% if usuario_item %}{% if usuario_item.activo %}checked{% endif %}{% else %}checked{% endif %}>
+                                <label class="form-check-label small fw-semibold" for="activo">Usuario Activo</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 fw-bold py-2 shadow-sm">
+                        <i class="bi bi-save me-1"></i> Guardar Usuario
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'inc/footer.html' %}

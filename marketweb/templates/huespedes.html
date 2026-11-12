@@ -1,0 +1,93 @@
+{% load static %}
+{% include 'inc/header.html' %}
+
+<div class="container my-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+        <div>
+            <h3 class="fw-bold text-dark mb-0">
+                <i class="bi bi-people-fill text-primary me-2"></i>Directorio de Huéspedes
+            </h3>
+            <p class="text-muted small mb-0">Gestión de clientes y registros de identificación</p>
+        </div>
+        <div>
+            <a href="{% url 'crear_huesped' %}" class="btn btn-primary fw-bold shadow-sm">
+                <i class="bi bi-person-plus-fill me-1"></i> Registrar Nuevo Huésped
+            </a>
+        </div>
+    </div>
+
+    <!-- Buscador -->
+    <div class="card border-0 shadow-sm rounded-3 p-3 mb-4 bg-white">
+        <form method="GET" action="{% url 'listar_huespedes' %}" class="row g-2 align-items-center">
+            <div class="col-md-10">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" name="q" value="{{ busqueda }}" class="form-control border-start-0" placeholder="Buscar por Nombre, Apellido, Documento o Correo...">
+                </div>
+            </div>
+            <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-dark fw-bold">Buscar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Tabla de Huéspedes -->
+    <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Documento</th>
+                        <th>Huésped</th>
+                        <th>Contacto</th>
+                        <th>Nacionalidad</th>
+                        <th>Extranjero (IVA)</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for h in huespedes %}
+                        <tr>
+                            <td>
+                                <span class="badge bg-secondary extra-small">{{ h.get_tipo_documento_display }}</span><br>
+                                <strong class="text-dark">{{ h.numero_documento }}</strong>
+                            </td>
+                            <td>
+                                <div class="fw-bold text-dark">{{ h.nombres }} {{ h.apellidos }}</div>
+                            </td>
+                            <td class="small">
+                                <div><i class="bi bi-telephone text-muted me-1"></i> {{ h.telefono }}</div>
+                                <div><i class="bi bi-envelope text-muted me-1"></i> {{ h.correo }}</div>
+                            </td>
+                            <td>{{ h.nacionalidad }}</td>
+                            <td>
+                                {% if h.es_extranjero %}
+                                    <span class="badge bg-info text-dark fw-bold"><i class="bi bi-check-circle me-1"></i> Exento IVA</span>
+                                {% else %}
+                                    <span class="badge bg-light text-muted border">Nacional</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <a href="{% url 'detalle_huesped' h.id %}" class="btn btn-sm btn-outline-info me-1" title="Historial">
+                                    <i class="bi bi-clock-history"></i>
+                                </a>
+                                <a href="{% url 'editar_huesped' h.id %}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">
+                                <i class="bi bi-person-exclamation fs-3 d-block mb-2"></i>
+                                No se encontraron huéspedes registrados.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% include 'inc/footer.html' %}

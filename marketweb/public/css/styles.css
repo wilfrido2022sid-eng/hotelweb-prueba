@@ -1,0 +1,209 @@
+/* ==========================================================
+   HOTEL WALENA - ESTILOS CORPORATIVOS & COLORIMETRÍA
+   ========================================================== */
+
+/* Configuración General */
+body {
+    background-color: #f8fafc;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.extra-small {
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+}
+
+/* Header & Navbar */
+.navbar-walena {
+    background-color: #0f172a;
+    border-bottom: 3px solid #e65100;
+}
+
+.badge-riohacha {
+    background-color: #ffb74d;
+    color: #0f172a;
+    font-size: 0.65rem;
+}
+
+/* Hero / Banner Principal */
+.hero-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-left: 6px solid #e65100;
+}
+
+.pill-location {
+    background-color: rgba(230, 81, 0, 0.25);
+    color: #ff9800;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.btn-reserva-banner {
+    background-color: #e65100;
+    border: none;
+    border-radius: 8px;
+}
+
+.btn-reserva-banner:hover {
+    background-color: #bf360c;
+    color: #ffffff;
+}
+
+/* Tarjetas de Métricas Directivas */
+.card-total-suites {
+    background-color: #0f172a;
+    border-left: 5px solid #64748b !important;
+}
+
+.card-disponibles {
+    border-left: 5px solid #10b981 !important;
+}
+
+.card-ocupadas {
+    border-left: 5px solid #1e88e5 !important;
+}
+
+.card-aseo {
+    border-left: 5px solid #ffb74d !important;
+}
+
+/* Cajas de Íconos */
+.icon-box-dark {
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 50px;
+    height: 50px;
+}
+
+.icon-box-success {
+    background-color: #d1fae5;
+    width: 50px;
+    height: 50px;
+}
+
+.icon-box-info {
+    background-color: #e0f2fe;
+    width: 50px;
+    height: 50px;
+}
+
+.icon-box-warning {
+    background-color: #fef3c7;
+    width: 50px;
+    height: 50px;
+}
+
+/* Módulos de Operación Rápida */
+.quick-op-btn {
+    background-color: #f8fafc;
+}
+
+.icon-op-reserva { background-color: #e65100; }
+.icon-op-checkin { background-color: #10b981; }
+.icon-op-checkout { background-color: #ef4444; }
+.icon-op-huespedes { background-color: #0284c7; }
+
+/* Sección Mapa de Habitaciones */
+.section-title {
+    border-left: 4px solid #e65100;
+    padding-left: 10px;
+}
+
+.card-hab {
+    background-color: #ffffff;
+}
+
+/* Estados Visuales de Habitaciones (Código Institucional) */
+.hab-disponible {
+    border-top: 4px solid #10b981 !important;
+}
+
+.hab-ocupada {
+    border-top: 4px solid #1e88e5 !important;
+}
+
+.hab-aseo {
+    border-top: 4px solid #ffb74d !important;
+}
+
+/* Badges de Estado */
+.badge-estado-disponible {
+    background-color: #d1fae5;
+    color: #047857;
+}
+
+.badge-estado-ocupada {
+    background-color: #e0f2fe;
+    color: #1e88e5;
+}
+
+.badge-estado-aseo {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+/* Caja de Detalles Técnicos */
+.hab-details-box {
+    background-color: #f8fafc;
+    font-size: 0.85rem;
+}
+
+/* Botones por Estado */
+.btn-hab-disponible {
+    background-color: #10b981;
+    border-radius: 6px;
+    color: #ffffff;
+}
+.btn-hab-disponible:hover { background-color: #059669; color: #ffffff; }
+
+.btn-hab-ocupada {
+    background-color: #1e88e5;
+    border-radius: 6px;
+    color: #ffffff;
+}
+.btn-hab-ocupada:hover { background-color: #1565c0; color: #ffffff; }
+
+.btn-hab-aseo {
+    background-color: #ffb74d;
+    border-radius: 6px;
+    color: #0f172a;
+}
+.btn-hab-aseo:hover { background-color: #ffa726; color: #0f172a; }
+
+/* Footer */
+.footer-walena {
+    background-color: #0f172a;
+    border-top: 1px solid #334155;
+    font-size: 0.85rem;
+}
+
+/* Menú de navegación móvil (Checkbox Hack) */
+#nav-toggler:checked ~ .custom-nav-menu {
+display: block !important;
+}
+
+/* Modales emergentes mediante :target */
+.modal-css {
+display: none;
+position: fixed;
+top: 0; 
+left: 0; 
+width: 100%; 
+height: 100%;
+background-color: rgba(15, 23, 42, 0.7);
+z-index: 1050;
+align-items: center;
+justify-content: center;
+}
+
+.modal-css:target {
+display: flex;
+}
+
+.modal-css-box {
+background: #ffffff;
+padding: 2rem;
+border-radius: 8px;
+max-width: 500px;
+width: 90%;
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
